@@ -1,0 +1,121 @@
+// Ready for AWS RDS PostgreSQL migration
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(uuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         String   @default("CITIZEN")
+  createdAt    DateTime @default(now())
+}
+
+model Temple {
+  id          String          @id
+  index       Int             @unique
+  name        String
+  hindiName   String?
+  area        String
+  zone        String
+  city        String
+  category    String          @default("Temple")
+  timing      String
+  route       String
+  parking     String
+  lastMile    String
+  zoneRule    String
+  nearby      String
+  helpline    String          @default("Police: 100 | Ambulance: 108 | Nagar Nigam: 1533")
+  disclaimer  String
+  imageUrl    String
+  latitude    Float
+  longitude   Float
+  parkingList ParkingOption[]
+  createdAt   DateTime        @default(now())
+}
+
+model ParkingOption {
+  id             String   @id @default(uuid())
+  templeId       String
+  name           String
+  locationDesc   String
+  vehicleTypes   String   @default("Two-Wheeler, Four-Wheeler")
+  isSuggested    Boolean  @default(true)
+  capacityHint   String?
+  walkingMinutes Int      @default(5)
+  temple         Temple   @relation(fields: [templeId], references: [id], onDelete: Cascade)
+  createdAt      DateTime @default(now())
+}
+
+model CrowdLocation {
+  id           String        @id
+  name         String
+  locationType String
+  area         String
+  capacity     Int
+  currentCrowd Int
+  entryRate    Int
+  exitRate     Int
+  notes        String?
+  latitude     Float
+  longitude    Float
+  updatedAt    DateTime      @updatedAt
+  metrics      CrowdMetric[]
+  alerts       CrowdAlert[]
+}
+
+model CrowdMetric {
+  id              String        @id @default(uuid())
+  locationId      String
+  crowdCount      Int
+  capacity        Int
+  entryRate       Int
+  exitRate        Int
+  occupancyRatio  Float
+  riskLevel       String
+  riskScore       Int
+  timestamp       DateTime      @default(now())
+  location        CrowdLocation @relation(fields: [locationId], references: [id], onDelete: Cascade)
+}
+
+model CrowdAlert {
+  id                 String        @id @default(uuid())
+  locationId         String
+  riskLevel          String
+  riskScore          Int
+  title              String
+  reasons            String
+  recommendedActions String
+  status             String        @default("ACTIVE")
+  acknowledgedBy     String?
+  acknowledgedAt     DateTime?
+  createdAt          DateTime      @default(now())
+  location           CrowdLocation @relation(fields: [locationId], references: [id], onDelete: Cascade)
+}
+
+model ChatSession {
+  id        String   @id @default(uuid())
+  query     String
+  response  String
+  language  String   @default("en")
+  provider  String   @default("mock")
+  timestamp DateTime @default(now())
+}
+
+model Itinerary {
+  id            String   @id @default(uuid())
+  durationHours Float
+  startLocation String
+  placesList    String
+  scheduleJson  String
+  notes         String?
+  createdAt     DateTime @default(now())
+}

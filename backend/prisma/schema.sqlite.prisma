@@ -1,0 +1,119 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(uuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         String   @default("CITIZEN") // "CITIZEN" or "AUTHORITY"
+  createdAt    DateTime @default(now())
+}
+
+model Temple {
+  id          String          @id // M001 to M032
+  index       Int             @unique
+  name        String
+  hindiName   String?
+  area        String
+  zone        String
+  city        String
+  category    String          @default("Temple")
+  timing      String
+  route       String
+  parking     String
+  lastMile    String
+  zoneRule    String
+  nearby      String
+  helpline    String          @default("Police: 100 | Ambulance: 108 | Nagar Nigam: 1533")
+  disclaimer  String
+  imageUrl    String
+  latitude    Float
+  longitude   Float
+  parkingList ParkingOption[]
+  createdAt   DateTime        @default(now())
+}
+
+model ParkingOption {
+  id             String   @id @default(uuid())
+  templeId       String
+  name           String
+  locationDesc   String
+  vehicleTypes   String   @default("Two-Wheeler, Four-Wheeler")
+  isSuggested    Boolean  @default(true)
+  capacityHint   String?
+  walkingMinutes Int      @default(5)
+  temple         Temple   @relation(fields: [templeId], references: [id], onDelete: Cascade)
+  createdAt      DateTime @default(now())
+}
+
+model CrowdLocation {
+  id           String        @id // e.g. LOC-001
+  name         String
+  locationType String        // "TEMPLE", "RAILWAY_STATION", "BUS_TERMINAL", "FESTIVAL_EVENT"
+  area         String
+  capacity     Int
+  currentCrowd Int
+  entryRate    Int           // persons per min
+  exitRate     Int           // persons per min
+  notes        String?
+  latitude     Float
+  longitude    Float
+  updatedAt    DateTime      @updatedAt
+  metrics      CrowdMetric[]
+  alerts       CrowdAlert[]
+}
+
+model CrowdMetric {
+  id              String        @id @default(uuid())
+  locationId      String
+  crowdCount      Int
+  capacity        Int
+  entryRate       Int
+  exitRate        Int
+  occupancyRatio  Float
+  riskLevel       String        // "LOW", "MEDIUM", "HIGH", "CRITICAL"
+  riskScore       Int           // 0 to 100
+  timestamp       DateTime      @default(now())
+  location        CrowdLocation @relation(fields: [locationId], references: [id], onDelete: Cascade)
+}
+
+model CrowdAlert {
+  id                 String        @id @default(uuid())
+  locationId         String
+  riskLevel          String        // "HIGH", "CRITICAL"
+  riskScore          Int
+  title              String
+  reasons            String        // JSON string of reasons
+  recommendedActions String        // JSON string of SOPs
+  status             String        @default("ACTIVE") // "ACTIVE", "ACKNOWLEDGED", "RESOLVED"
+  acknowledgedBy     String?
+  acknowledgedAt     DateTime?
+  createdAt          DateTime      @default(now())
+  location           CrowdLocation @relation(fields: [locationId], references: [id], onDelete: Cascade)
+}
+
+model ChatSession {
+  id        String   @id @default(uuid())
+  query     String
+  response  String
+  language  String   @default("en")
+  provider  String   @default("mock")
+  timestamp DateTime @default(now())
+}
+
+model Itinerary {
+  id            String   @id @default(uuid())
+  durationHours Float
+  startLocation String
+  placesList    String   // JSON string of temple IDs
+  scheduleJson  String   // JSON string of scheduled stops
+  notes         String?
+  createdAt     DateTime @default(now())
+}

@@ -1,0 +1,80 @@
+[
+  {
+    "id": "LOC-001",
+    "name": "Banke Bihari Temple Complex & Lanes",
+    "locationType": "TEMPLE",
+    "area": "Vrindavan",
+    "capacity": 2000,
+    "currentCrowd": 2850,
+    "entryRate": 180,
+    "exitRate": 60,
+    "notes": "Narrow heritage lanes (Kunj Galiyan); bottleneck risk at VIP and general exit gates.",
+    "latitude": 27.5815,
+    "longitude": 77.7005
+  },
+  {
+    "id": "LOC-002",
+    "name": "Mathura Junction Railway Station",
+    "locationType": "RAILWAY_STATION",
+    "area": "Mathura",
+    "capacity": 4500,
+    "currentCrowd": 3800,
+    "entryRate": 240,
+    "exitRate": 190,
+    "notes": "Major junction connecting Delhi-Mumbai-Agra; Platform 1-3 concourse passenger surge during weekend express arrivals.",
+    "latitude": 27.4924,
+    "longitude": 77.6737
+  },
+  {
+    "id": "LOC-003",
+    "name": "Prem Mandir Campus & Front Plaza",
+    "locationType": "TEMPLE",
+    "area": "Vrindavan",
+    "capacity": 5000,
+    "currentCrowd": 2100,
+    "entryRate": 110,
+    "exitRate": 120,
+    "notes": "Wide open marble courtyards; manageable flow with evening musical fountain and illumination peaks.",
+    "latitude": 27.5715,
+    "longitude": 77.6715
+  },
+  {
+    "id": "LOC-004",
+    "name": "Shri Krishna Janmabhoomi Outer Security Corridor",
+    "locationType": "TEMPLE",
+    "area": "Mathura",
+    "capacity": 3000,
+    "currentCrowd": 2350,
+    "entryRate": 130,
+    "exitRate": 110,
+    "notes": "Multi-tiered frisking and baggage checkpoints; queuing area at Gate 1 and Gate 3.",
+    "latitude": 27.505,
+    "longitude": 77.671
+  },
+  {
+    "id": "LOC-005",
+    "name": "Mathura ISBT Bus Terminal (Old & New Bay)",
+    "locationType": "BUS_TERMINAL",
+    "area": "Mathura",
+    "capacity": 2500,
+    "currentCrowd": 1400,
+    "entryRate": 85,
+    "exitRate": 90,
+    "notes": "Interstate transit hub for Delhi, Jaipur, Agra, and Aligarh buses.",
+    "latitude": 27.501,
+    "longitude": 77.662
+  },
+  {
+    "id": "LOC-006",
+    "name": "Dan Ghati / Govardhan Parikrama Entry Point",
+    "locationType": "FESTIVAL_EVENT",
+    "area": "Govardhan",
+    "capacity": 3500,
+    "currentCrowd": 1900,
+    "entryRate": 140,
+    "exitRate": 130,
+    "notes": "Parikrama circumambulation circuit start node; heavy weekend and Ekadashi pilgrim footfall.",
+    "latitude": 27.497,
+    "longitude": 77.465
+  }
+]
