@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+*/node_modules/
+
+# Production Builds & Zips
+dist/
+dist.zip
+build/
+*.zip
+
+# Local Environment Variables & Secrets
+.env
+.env.local
+.env.production
+*.env
+
+# SQLite Local Database
+*.db
+*.db-journal
+
+# OS & Editor files
+.DS_Store
+.vscode/
+.idea/
